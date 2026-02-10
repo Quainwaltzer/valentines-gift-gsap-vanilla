@@ -4,6 +4,327 @@
   box-sizing: inherit;
 }
 
+
+
 html {
   box-sizing: border-box;
+  background: #151515;
+  overflow-x: hidden;
 }
+
+body{
+    height: 100dvh;
+
+}
+
+.first-one{
+    height: 100dvh;
+    width: 100%;
+    background: #151515;
+}
+
+.main-content{
+    height: 100dvh; 
+    width: 100%;
+    color: white;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lexend', sans-serif;
+    font-size: 40px;
+    position: relative;
+}
+
+.h1-wrap, .img-wrap{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.h1-wrap{
+    flex: 7;
+    display: flex;
+    flex-direction: column;
+}
+
+.h1-wrap p{
+    font-size: 20px;
+}
+
+.h1-wrap h1{
+    width: 100%;
+    word-break: break-word; 
+    word-wrap: normal;
+    font-size: clamp(24px, 5vw, 50px); 
+    line-height: 1.2;
+}
+
+.img-wrap{
+    flex: 3;
+    transform: translateX(-25%);
+    height: fit-content;
+    --glow-x: 0%;
+   --scale-x: 1;
+}
+.img-wrap img{
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+    border-radius: 10px;
+  
+}
+
+.img-wrap::before{
+   content: "";
+   display: block;
+    background: linear-gradient(90deg, #dc143a 0%, pink 15%, violet 45%, rgb(187, 0, 255), rgb(255, 0, 0));
+    filter: blur(100px);
+    border-radius: 40%;
+    height: 50%;
+    width: 80%;
+    position: absolute;
+    z-index: -1;
+    transform: translateX(var(--glow-x)) scaleX(var(--scale-x));
+    
+}
+
+.rotating-element{
+    position: absolute;
+    height: 100dvh;
+    width: 100%;
+    background: transparent;
+    display: flex;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    overflow: hidden;
+}
+.upper-box, .lower-box {
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+   background: linear-gradient(90deg, #0b0b0b 0%, #151515 50%, #0b0b0b 100%);
+
+        box-shadow: inset 0 0 100px rgb(0, 0, 0);
+
+        z-index: 10;
+
+        /* Create 'curtain folds' using a repeating gradient */
+
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgb(80, 0, 0) 0px,    /* Deep shadow groove */
+    rgb(160, 0, 0) 10px,   /* Transition */
+    rgb(220, 20, 60) 20px, /* Highlight peak */
+    rgb(160, 0, 0) 30px,   /* Transition */
+    rgb(80, 0, 0) 40px     /* Back to shadow */
+);
+
+
+}
+
+.upper-box{
+    border-right: 3px solid rgba(215, 215, 0, 1);
+}
+
+.lower-box{
+    border-left: 3px solid rgba(215, 215, 0, 1);
+}
+
+.second-one{
+    height: 100dvh;
+    width: 100%;
+    background: #151515;
+}
+
+#yo{
+    color: white;
+    /* font-family: 'Lexend', sans-serif; */
+}
+
+/* Second Part */
+
+.horizontal-wrapper{
+    padding: 0%;
+}
+
+.content-wrapper-second{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    gap: 50px;
+}
+
+
+.upper-elements-wrapper{
+    color: white;
+    font-family: 'Playfair Display', sans-serif;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.horizontal-scroll {
+    display: flex;
+    width: fit-content;
+    height: 100%;
+ /* This allows it to stretch past the screen width */
+    flex: 8;
+}
+
+.photo-card {
+    width: calc(100dvw - 78px); /* Adjust based on your Polaroid size */
+    height: 100%;
+    padding: 20px 20px 20px 20px;
+}
+
+.card-wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.img-card-wrapper{
+    width: 30%;
+    height: 100%;
+    position: relative;
+    padding: 50px;
+}
+
+.lighting{
+    position: absolute;
+    content: "";
+    display: block;
+    width: 10%;
+    height: 10%;
+    border: 2px solid black;
+    background: linear-gradient(
+    to right, 
+    #000000 0%,   /* Deep shadow at the left edge */
+    #333333 30%,  /* Transition */
+    #3f3f3f 50%,  /* The "Highlight" in the center */
+    #333333 70%,  /* Transition */
+    #000000 100%  /* Deep shadow at the right edge */
+);
+    border-radius: 20px 20px 0 0;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.light-shadow{
+    position: absolute;
+    content: "";
+    display: block;
+    width: 10%;
+    height: 5%;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border-radius: 50%;
+    background: goldenrod;
+    filter: blur(3px)
+}
+
+.light-shadow-2{
+    position: absolute;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 60%;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border-radius: 50%;
+    background: rgba(218, 165, 32, 0.26);
+    filter: blur(100px);
+}
+
+.img-card-wrapper img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    box-shadow: 0 20px 10px 5px black;
+}
+
+.info{
+    flex: 7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 50px 0;
+}
+
+.info li{
+    font-family: 'Lexend', sans-serif;
+    color: white;
+}
+
+.info li:first-child{
+    display: flex;
+    justify-content: flex-start;
+    align-items: end;
+    font-size: 45px;
+    font-weight:bold; 
+    flex: 5;
+}
+
+.info li:first-child .title-span-wrapper{
+    --bg-width: 0;
+    height: fit-content;
+    width: fit-content;
+    position: relative;
+}
+
+.info li:first-child .red{
+    content:"";
+    display: block;
+    width: var(--bg-width);
+    height: 100%;
+    background: red;
+    position: absolute;
+    z-index: -1;
+}
+
+.info li:nth-child(2){
+    font-size: 24px;
+    font-style: italic;
+    flex: 5;
+}
+
+.text-info-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+}
+
+.gsap-marker-start, .gsap-marker-end {
+    position: fixed !important; 
+    z-index: 99999 !important;
+    visibility: visible !important;
+}
+
+li{
+    list-style: none;
+}
+
