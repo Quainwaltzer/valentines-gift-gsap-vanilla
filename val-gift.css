@@ -299,7 +299,7 @@ body{
 }
 
 .info li:nth-child(2){
-    font-size: 24px;
+    font-size: 18px;
     font-style: italic;
     flex: 5;
 }
