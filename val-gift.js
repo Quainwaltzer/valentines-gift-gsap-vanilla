@@ -3,6 +3,16 @@ gsap.registerPlugin(ScrollTrigger, SplitText, ScrollSmoother, ScrambleTextPlugin
 
 
 window.addEventListener('load', () => {
+
+    if (window.innerWidth <= 1024) {
+        // Just kill the loader so the CSS "device-gate" is visible
+        const loader = document.getElementById('loading-screen');
+        if (loader) loader.style.display = 'none';
+        
+        // Stop the rest of the script from executing
+        return; 
+    }
+    
 let split = SplitText.create('.main-content h1', {type: 'chars'});
 ScrollSmoother.create({
     wrapper: "#smooth-wrapper",

@@ -910,3 +910,59 @@ opacity: 0.3;
     margin-top: 15px;
     opacity: 0.5;
 }
+
+/* 1. Hide the gate by default for Desktop */
+#device-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0a0a0a;
+    z-index: 1000000; /* Higher than the loader */
+    color: #39FF14;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px;
+}
+
+/* 2. Media Query for Tablets and Phones (Typical breakpoint) */
+@media (max-width: 1024px) {
+    #device-gate {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* 3. Disable all website elements underneath */
+    #smooth-wrapper, #loading-screen, #final-screen {
+        display: none !important;
+        pointer-events: none !important;
+    }
+    
+    html, body {
+        overflow: hidden !important;
+        height: 100% !important;
+    }
+}
+
+.gate-content h1 {
+    font-size: 1.5rem;
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+}
+
+.gate-content p {
+    font-size: 0.9rem;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.monitor-icon {
+    font-size: 4rem;
+    animation: pulse-monitor 2s infinite;
+}
+
+@keyframes pulse-monitor {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
