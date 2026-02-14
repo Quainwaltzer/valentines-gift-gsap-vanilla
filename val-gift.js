@@ -414,10 +414,10 @@ hello.from(split.chars, {
         height: '100%',
                 scrollTrigger: {
                 trigger: '.timeline-wrapper',
-                markers: true,
-                scrub: 1,
+                markers: false,
+                scrub: 1.5,
                 start: 'top top',
-                end: '80% top' 
+                end: 'bottom top' 
         }
     });
 
@@ -433,55 +433,316 @@ hello.from(split.chars, {
     });
 
     gsap.utils.toArray(".left").forEach((card) => {
-        const anim = gsap.from(card, {
-            x: '-50vw',
-            opacity: 0,
-            duration: 1,
-            paused: true,
-            ease: 'power2.out'
-        });
+        const image = card.querySelector('img');
+        const title = card.querySelector('h2');
+            const paragraph = card.querySelector('p');
+
+        const anim = gsap.timeline({ paused: true })
+            .from(card, {
+                rotationY: -10,
+                rotationX: 10,
+                transformPerspective: 1000,
+                x: -300, 
+                opacity: 0,
+                duration: 3,
+                ease: 'power4.out' 
+            })
+            .from(image, {
+                scale: 1.2,
+                duration: 2,
+                ease: 'power2.out'
+            }, 0)
+            .from(title, {
+                clipPath: 'inset(0 100% 0 0)',
+                x: -20,
+                duration: 1,
+            }, "-=1.5")
+            .from(paragraph, {
+                clipPath: 'inset(100% 0% 0% 0)',
+                x: -20,
+                duration: 1,
+            }, "-=2");
+
+          card.addEventListener("mouseenter", () => {
+                gsap.to(image, { 
+                    scale: 1.02, 
+                    duration: 1, 
+                    boxShadow: "0px 0px 20px 5px rgba(255, 215, 0, 0.5)",
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+            });
+
+            card.addEventListener("mouseleave", () => {
+                gsap.to(image, { 
+                    scale: 1, 
+                    duration: 1, 
+                    ease: "power2.out",
+                    boxShadow: "0px 0px 20px 5px rgba(255, 215, 0, 0)",
+                    overwrite: "auto" 
+                });
+            });
 
         ScrollTrigger.create({
             trigger: card,
-            start: 'top center',
-            end: 'bottom center',
-            markers: true,
-            toggleActions: 'none none none none',
+            start: 'top center', 
+            toggleActions: 'play none none none', 
+            markers: false,
             onEnter: () => anim.timeScale(1).play(),
-            onLeaveBack: () => anim.timeScale(4).reverse()
+            onLeaveBack: () => anim.timeScale(2).reverse() 
         });
     });
 
     gsap.utils.toArray(".right").forEach((card) => {
-        const anim = gsap.from(card, {
-            x: '-50vw',
-            opacity: 0,
-            duration: 1,
-            paused: true,
-            ease: 'power2.out'
-        });
+        const image = card.querySelector('img');
+        const title = card.querySelector('h2');
+        const paragraph = card.querySelector('p');
+        const anim = gsap.timeline({ paused: true })
+            .from(card, {
+                rotationY: 40,      /* Flipped from -40 */
+                rotationX: 10,
+                transformPerspective: 1000,
+                x: 300,             /* Flipped from -200 */
+                opacity: 0,
+                duration: 2.5,
+                ease: 'power4.out',
+                overwrite: 'auto',
+                lazy: true
+            })
+            .from(image, {
+                scale: 1.2,
+                duration: 2,
+                ease: 'power2.out'
+            }, 0)
+            .from(title, {
+                clipPath: 'inset(0 100% 0 0)',
+                x: 20,              /* Flipped from -20 */
+                duration: 1,
+            }, "-=1.5")
+            .from(paragraph, {
+                clipPath: 'inset(100% 0% 0% 0)',
+                x: 20,              /* Flipped from -20 */
+                duration: 1,
+            }, "-=2");
+
+            card.addEventListener("mouseenter", () => {
+                gsap.to(image, { 
+                    scale: 1.02, 
+                    duration: 1, 
+                    boxShadow: "0px 0px 20px 5px rgba(255, 215, 0, 0.5)",
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+            });
+
+            card.addEventListener("mouseleave", () => {
+                gsap.to(image, { 
+                    scale: 1, 
+                    duration: 1, 
+                    ease: "power2.out",
+                    boxShadow: "0px 0px 20px 5px rgba(255, 215, 0, 0)",
+                    overwrite: "auto" 
+                });
+            });
 
         ScrollTrigger.create({
             trigger: card,
-            start: 'top center',
-            end: 'bottom center',
-            markers: true,
-            toggleActions: 'none none none none',
+            start: 'top center', 
+            toggleActions: 'play none none none', 
             onEnter: () => anim.timeScale(1).play(),
-            onLeaveBack: () => anim.timeScale(4).reverse()
+            onLeaveBack: () => anim.timeScale(2).reverse() 
         });
     });
 
-
-
+const h1s = gsap.utils.toArray('.sunset-transition h1s');
     ScrollTrigger.create({
         trigger: ".sunset-transition",
         start: "top center",
         end: "+=200%",
-        pin: ".sunset-transition h1",
+        pin: ".sunset-transition .sunset-first",
         pinSpacing: false, 
         markers: false,
         anticipatePin: 1
     });
+
+       ScrollTrigger.create({
+        trigger: ".sunset-transition",
+        start: "top center",
+        end: "+=200%",
+        pin: ".sunset-transition .sunset-second",
+        pinSpacing: false, 
+        markers: false,
+        anticipatePin: 1
+    });
+
+    // 1. Grab the elements
+        const envelope = document.querySelector('.envelope');
+        const expandBtn = document.querySelector('.expand-btn');
+        const closeBtn = document.querySelector('.close-btn');
+
+        // 2. Attach the listeners
+        if (envelope) {
+            envelope.addEventListener('click', openLetter);
+        }
+
+        if (expandBtn) {
+            expandBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                expandMessage();
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeMessage);
+        }
+
+    function openLetter() {
+    const tl = gsap.timeline();
+
+    tl.to(".flap", { 
+        rotationX: 180, 
+        transformOrigin: 'top',
+        duration: 0.6, 
+        ease: "power2.inOut" 
+    },0)
+    .to("#paper", {
+         zIndex: 3,
+    }, 0.6)
+    .to("#paper", { 
+        y: -200, 
+        duration: 3, 
+        
+        ease: "power2.inOut" 
+    }, '>')
+    .to("#paper", {
+        zIndex: 4,
+    }, '>')
+    .to("#paper", {
+        
+        y: 0,
+        duration: 3, 
+        ease: "power2.inOut" 
+    }, '>')
+}
+
+
+const paper = document.getElementById('paper');
+const originalHTML = paper.innerHTML; // Save the 'Envelope' view
+
+
+    
+    // We use a delegated listener for the close button since its HTML is swapped
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('close-btn')) {
+            closePaper(e);
+        }
+    });
+
+    if (expandBtn) {
+        expandBtn.addEventListener('click', expandPaper);
+    }
+
+    function expandPaper(e) {
+        if (e) e.stopPropagation();
+gsap.killTweensOf(paper);
+        // 1. Lock the scroll
+        gsap.to(['.sunset-first', '.sunset-second'], {opacity: 0, duration: 0.3});
+        gsap.to('.paper-content', {opacity: 0, duration: 0.3});
+        // 2. Expand the paper via CSS class
+        gsap.to(paper, {height: '100dvh', width: '100dvw', top: '0%', left: '0%', y: 0,          // This "neutralizes" the -150px
+                                clearProps: "transform", zIndex: 10000})
+
+        // 3. Swap the content after the scale transition
+        setTimeout(() => {
+            paper.innerHTML = `
+                <button class="close-btn">×</button>
+                <div class="full-message-text" style="text-align: center; max-width: 600px;">
+                    <h2 style="font-family: 'DM Serif Display'; color: #333;">To Geli,</h2>
+                    <p style="font-family: 'Lexend'; line-height: 1.8; color: #444;">
+                        Since 2023, every line of code I’ve written and every memory buffer I’ve filled has been better because of you. Looking back at how far we’ve come, I’m realized that you aren’t just a part of my life—you’re the person who makes the hard parts worth it.
+                        <br>
+                        I know I haven’t always been easy to deal with. I know there are days when I’m a headache, a source of stress, or even a "peck of sadness" to you. Thank you for staying through those glitches. Thank you for having the patience to debug my moods and for staying by my side when things got complicated. I promise to keep working on myself and to be better for you as time passes by.
+                        <br>
+                        Thank you so much, goofi, for being my biggest supporter in my studies. Having you in my corner makes the long nights and the hardships feel like just a temporary setup for something amazing.
+                    <br>
+                        I truly believe that someday, we are going to look back at these struggles from the top of our own success. All the stress we endure right now will just be a "thing of the past"—a story we tell while we enjoy the life we’ve built together. <3
+                    </p>
+                </div>
+            `;
+            
+            // GSAP entrance for the text
+            gsap.from(".full-message-text", { opacity: 0, y: 20, duration: 0.5 });
+        }, 400);
+    }
+
+function closePaper(e) {
+    if (e) e.stopPropagation();
+
+    // 1. Create a "Grand Finale" timeline
+    const finaleTl = gsap.timeline();
+
+    finaleTl
+        // Fade out everything (The envelope, the paper, the background)
+        .to("body > *:not(#final-screen)", { 
+            opacity: 0, 
+            duration: 1, 
+            ease: "power2.inOut",
+            onStart: () => {
+                // Prepare the final screen
+                gsap.set("#final-screen", { display: 'flex' });
+            }
+        })
+        // Fade in the final message
+        .to("#final-screen", { 
+            opacity: 1, 
+            duration: 1.5, 
+            ease: "power2.out" 
+        }, "-=0.5") // Start slightly before the previous fade finishes
+        // Subtle "float" animation for the text
+        .from("#final-screen h1", {
+            y: 30,
+            duration: 2,
+            ease: "elastic.out(1, 0.5)"
+        }, "<");
+
+    // 2. Cleanup (Optional: if you want to prevent scrolling forever)
+    document.documentElement.style.overflow = 'hidden';
+}
+
 });
   
+window.addEventListener('DOMContentLoaded', () => {
+    const messages = [
+        "> Loading Mauban_Memories...",
+        "> Syncing Pagbilao_Rocks.obj",
+        "> Calibrating Anniversary_LTS_v2...",
+        "> Optimizing Love_Algorithm...",
+        "> Deployment Ready."
+    ];
+    
+    let tl = gsap.timeline({
+        onComplete: () => {
+            // Hide the loading screen
+            gsap.to("#loading-screen", { 
+                opacity: 0, 
+                duration: 0.8, 
+                onComplete: () => {
+                    document.getElementById('loading-screen').style.display = 'none';
+                    // Trigger your main entrance animations here if you have any!
+                } 
+            });
+        }
+    });
+
+    // Animate the progress bar
+    tl.to(".progress-fill", { width: "100%", duration: 3, ease: "none" });
+
+    // Cycle through messages
+    messages.forEach((msg, i) => {
+        tl.to("#load-text", {
+            text: msg,
+            duration: 0.5,
+            immediateRender: false
+        }, i * 0.6); // Stagger the text updates
+    });
+});
